@@ -3,7 +3,7 @@ package geometry;
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class Rectangle extends Shape{
+public class Rectangle extends ShapeSurface {
 	private Point upperLeftPoint;
 	private int width;
 	private int height;
@@ -16,15 +16,15 @@ public class Rectangle extends Shape{
 		this.width = width;
 		this.height = height;
 	}
-	public Rectangle(Point upperLeftPoint, int width, int height, Color edgeColor, Color innerColor) {
+
+	public Rectangle(Point upperLeftPoint, int width, int height, Color edgeColor, Color fillColor) {
 		this(upperLeftPoint, width, height);
 		this.color = edgeColor;
-		this.innerColor = innerColor;
+		this.fillColor = fillColor;
 	}
 
-	public Rectangle(Point upperLeftPoint, int width, int height, boolean selected) {
-
-		this(upperLeftPoint, width, height);
+	public Rectangle(Point upperLeftPoint, int width, int height, Color edgeColor, Color fillColor, boolean selected) {
+		this(upperLeftPoint, width, height, edgeColor, fillColor);
 		this.selected = selected;
 	}
 
@@ -41,17 +41,14 @@ public class Rectangle extends Shape{
 	}
 
 	public boolean contains(int x, int y) {
-		return x >= upperLeftPoint.getX() &&
-				x <= this.upperLeftPoint.getX() + width && 
-				y >= upperLeftPoint.getY() &&
-				y <= getUpperLeftPoint().getY() + height;
+		return x >= upperLeftPoint.getX() && x <= this.upperLeftPoint.getX() + width && y >= upperLeftPoint.getY()
+				&& y <= getUpperLeftPoint().getY() + height;
 	}
 
 	public boolean contains(Point clickPoint) {
-		return clickPoint.getX() >= upperLeftPoint.getX() &&
-				clickPoint.getX() <= this.upperLeftPoint.getX() + width && 
-				clickPoint.getY() >= upperLeftPoint.getY() &&
-				clickPoint.getY() <= getUpperLeftPoint().getY() + getHeight();
+		return clickPoint.getX() >= upperLeftPoint.getX() && clickPoint.getX() <= this.upperLeftPoint.getX() + width
+				&& clickPoint.getY() >= upperLeftPoint.getY()
+				&& clickPoint.getY() <= getUpperLeftPoint().getY() + getHeight();
 	}
 
 	public int area() {
@@ -61,17 +58,17 @@ public class Rectangle extends Shape{
 	public int circumference() {
 		return 2 * (width + height);
 	}
-	
+
 	@Override
 	public void moveTo(int x, int y) {
 		upperLeftPoint.moveTo(x, y);
 	}
-	
+
 	@Override
 	public void moveBy(int byX, int byY) {
 		upperLeftPoint.moveBy(byX, byY);
 	}
-	
+
 	@Override
 	public int compareTo(Object obj) {
 		if (obj instanceof Rectangle) {
@@ -108,22 +105,24 @@ public class Rectangle extends Shape{
 	public String toString() {
 		return "Upper left point:" + upperLeftPoint + ", width =" + width + ",height = " + height;
 	}
+
+	@Override
 	public void fill(Graphics g) {
-		g.setColor(innerColor);
+		g.setColor(fillColor);
 		g.fillRect(this.upperLeftPoint.getX() + 1, this.upperLeftPoint.getY() + 1, this.width - 1, this.height - 1);
 	}
 
 	@Override
 	public void draw(Graphics g) {
-		g.setColor(color);
+		g.setColor(this.color);
 		g.drawRect(upperLeftPoint.getX(), upperLeftPoint.getY(), width, height);
 		this.fill(g);
-		if(isSelected()) {
+		if (isSelected()) {
 			g.setColor(Color.blue);
 			g.drawRect(upperLeftPoint.getX() - 2, upperLeftPoint.getY() - 2, 4, 4);
 			g.drawRect(upperLeftPoint.getX() + width - 2, upperLeftPoint.getY() - 2, 4, 4);
 			g.drawRect(upperLeftPoint.getX() - 2, upperLeftPoint.getY() + height - 2, 4, 4);
-			g.drawRect(upperLeftPoint.getX() + width  - 2, upperLeftPoint.getY() + height - 2, 4, 4);
+			g.drawRect(upperLeftPoint.getX() + width - 2, upperLeftPoint.getY() + height - 2, 4, 4);
 			g.setColor(Color.black);
 		}
 	}

@@ -5,9 +5,6 @@ import java.awt.Graphics;
 
 public class Point extends Shape {
 
-	/*
-	 * public int x; public int y; public boolean selected;
-	 */
 	private int x;
 	private int y;
 
@@ -19,28 +16,25 @@ public class Point extends Shape {
 		this.x = x;
 		setY(y);
 	}
+
 	public Point(int x, int y, Color color) {
-		this(x,y);
+		this(x, y);
 		this.color = color;
 	}
 
-	public Point(int x, int y, boolean selected) {
-		/*
-		 * this.x=x; setY(y);
-		 */
-		// mora da bude prva naredba
-		this(x, y);
+	public Point(int x, int y, Color color, boolean selected) {
+		this(x, y, color);
 		this.selected = selected;
 	}
 
 	public void draw(Graphics g) {
-		g.setColor(color);
+		g.setColor(this.color);
 		g.drawLine(x - 2, y, x + 2, y);
 		g.drawLine(x, y - 2, x, y + 2);
-		
-		if(isSelected()) {
+
+		if (isSelected()) {
 			g.setColor(Color.BLUE);
-			g.drawRect(x-2, y-2, 4, 4);
+			g.drawRect(x - 2, y - 2, 4, 4);
 			g.setColor(Color.black);
 		}
 	}
@@ -108,9 +102,6 @@ public class Point extends Shape {
 	}
 
 	public String toString() {
-		// ispravno ali mi ne zelimo tako
-		// return String.valueOf(x);
-
 		return "(" + x + "," + y + ")";
 	}
 

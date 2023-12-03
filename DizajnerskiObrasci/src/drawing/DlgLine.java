@@ -1,6 +1,7 @@
 package drawing;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
@@ -12,26 +13,28 @@ import javax.swing.border.EmptyBorder;
 import geometry.Line;
 import geometry.Point;
 
+import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.GridBagConstraints;
+import java.awt.Font;
 import java.awt.Insets;
 import javax.swing.JTextField;
-import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class DlgLine extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private JTextField textFieldX1;
-	private JTextField textFieldY1;
-	private JTextField textFieldX2;
-	private JTextField textFieldY2;
-	private Line line = null;
+	private JTextField xField;
+	private JTextField x2Field;
+	private JTextField y2Field;
+	private JTextField yField;
+
 	private Color color = null;
+	private Line line = null;
 
 	/**
 	 * Launch the application.
@@ -50,114 +53,152 @@ public class DlgLine extends JDialog {
 	 * Create the dialog.
 	 */
 	public DlgLine() {
+		getContentPane().setBackground(Color.GRAY);
+		setTitle("Add or modify existing line");
 		setResizable(false);
 		setModal(true);
-		setTitle("Line");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBackground(new Color(255, 204, 102));
+		contentPanel.setBackground(Color.LIGHT_GRAY);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
-		gbl_contentPanel.columnWidths = new int[]{70, 0, 0};
-		gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
-		gbl_contentPanel.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPanel.columnWidths = new int[] { 0, 0, 0 };
+		gbl_contentPanel.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		gbl_contentPanel.columnWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
+		gbl_contentPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		contentPanel.setLayout(gbl_contentPanel);
 		{
-			JLabel lblStartX = new JLabel("X start coordinate:");
-			GridBagConstraints gbc_lblStartX = new GridBagConstraints();
-			gbc_lblStartX.insets = new Insets(0, 0, 5, 5);
-			gbc_lblStartX.anchor = GridBagConstraints.EAST;
-			gbc_lblStartX.gridx = 0;
-			gbc_lblStartX.gridy = 0;
-			contentPanel.add(lblStartX, gbc_lblStartX);
+			JLabel lblDialogName = new JLabel("LINE");
+			lblDialogName.setFont(new Font("Baskerville Old Face", Font.PLAIN, 18));
+			GridBagConstraints gbc_lblDialogName = new GridBagConstraints();
+			gbc_lblDialogName.gridwidth = 2;
+			gbc_lblDialogName.insets = new Insets(0, 0, 5, 5);
+			gbc_lblDialogName.gridx = 0;
+			gbc_lblDialogName.gridy = 0;
+			contentPanel.add(lblDialogName, gbc_lblDialogName);
 		}
 		{
-			textFieldX1 = new JTextField();
-			GridBagConstraints gbc_textFieldX1 = new GridBagConstraints();
-			gbc_textFieldX1.insets = new Insets(0, 0, 5, 0);
-			gbc_textFieldX1.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textFieldX1.gridx = 1;
-			gbc_textFieldX1.gridy = 0;
-			contentPanel.add(textFieldX1, gbc_textFieldX1);
-			textFieldX1.setColumns(10);
+			JLabel lblStartPointCoordinates = new JLabel("Start point information:");
+			lblStartPointCoordinates.setFont(new Font("Tahoma", Font.PLAIN, 16));
+			GridBagConstraints gbc_lblStartPointCoordinates = new GridBagConstraints();
+			gbc_lblStartPointCoordinates.gridwidth = 2;
+			gbc_lblStartPointCoordinates.insets = new Insets(0, 0, 5, 0);
+			gbc_lblStartPointCoordinates.gridx = 0;
+			gbc_lblStartPointCoordinates.gridy = 1;
+			contentPanel.add(lblStartPointCoordinates, gbc_lblStartPointCoordinates);
 		}
 		{
-			JLabel lblStartY = new JLabel("Y start coordinate");
-			GridBagConstraints gbc_lblStartY = new GridBagConstraints();
-			gbc_lblStartY.insets = new Insets(0, 0, 5, 5);
-			gbc_lblStartY.anchor = GridBagConstraints.EAST;
-			gbc_lblStartY.gridx = 0;
-			gbc_lblStartY.gridy = 1;
-			contentPanel.add(lblStartY, gbc_lblStartY);
+			JLabel lblXCoordinate = new JLabel("X coordinate:");
+			lblXCoordinate.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			GridBagConstraints gbc_lblXCoordinate = new GridBagConstraints();
+			gbc_lblXCoordinate.anchor = GridBagConstraints.WEST;
+			gbc_lblXCoordinate.insets = new Insets(0, 0, 5, 5);
+			gbc_lblXCoordinate.gridx = 0;
+			gbc_lblXCoordinate.gridy = 2;
+			contentPanel.add(lblXCoordinate, gbc_lblXCoordinate);
 		}
 		{
-			textFieldY1 = new JTextField();
-			GridBagConstraints gbc_textFieldY1 = new GridBagConstraints();
-			gbc_textFieldY1.insets = new Insets(0, 0, 5, 0);
-			gbc_textFieldY1.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textFieldY1.gridx = 1;
-			gbc_textFieldY1.gridy = 1;
-			contentPanel.add(textFieldY1, gbc_textFieldY1);
-			textFieldY1.setColumns(10);
+			xField = new JTextField();
+			GridBagConstraints gbc_xField = new GridBagConstraints();
+			gbc_xField.insets = new Insets(0, 0, 5, 0);
+			gbc_xField.fill = GridBagConstraints.HORIZONTAL;
+			gbc_xField.gridx = 1;
+			gbc_xField.gridy = 2;
+			contentPanel.add(xField, gbc_xField);
+			xField.setColumns(10);
 		}
 		{
-			JLabel lblEndX = new JLabel("X end coordinate");
-			GridBagConstraints gbc_lblEndX = new GridBagConstraints();
-			gbc_lblEndX.anchor = GridBagConstraints.EAST;
-			gbc_lblEndX.insets = new Insets(0, 0, 5, 5);
-			gbc_lblEndX.gridx = 0;
-			gbc_lblEndX.gridy = 2;
-			contentPanel.add(lblEndX, gbc_lblEndX);
+			JLabel lblYCoordinate = new JLabel("Y coordinate:");
+			lblYCoordinate.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			GridBagConstraints gbc_lblYCoordinate = new GridBagConstraints();
+			gbc_lblYCoordinate.insets = new Insets(0, 0, 5, 5);
+			gbc_lblYCoordinate.anchor = GridBagConstraints.WEST;
+			gbc_lblYCoordinate.gridx = 0;
+			gbc_lblYCoordinate.gridy = 3;
+			contentPanel.add(lblYCoordinate, gbc_lblYCoordinate);
 		}
 		{
-			textFieldX2 = new JTextField();
-			GridBagConstraints gbc_textFieldX2 = new GridBagConstraints();
-			gbc_textFieldX2.insets = new Insets(0, 0, 5, 0);
-			gbc_textFieldX2.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textFieldX2.gridx = 1;
-			gbc_textFieldX2.gridy = 2;
-			contentPanel.add(textFieldX2, gbc_textFieldX2);
-			textFieldX2.setColumns(10);
+			yField = new JTextField();
+			GridBagConstraints gbc_yField = new GridBagConstraints();
+			gbc_yField.insets = new Insets(0, 0, 5, 0);
+			gbc_yField.fill = GridBagConstraints.HORIZONTAL;
+			gbc_yField.gridx = 1;
+			gbc_yField.gridy = 3;
+			contentPanel.add(yField, gbc_yField);
+			yField.setColumns(10);
 		}
 		{
-			JLabel lblEndY = new JLabel("Y end coordinate");
-			GridBagConstraints gbc_lblEndY = new GridBagConstraints();
-			gbc_lblEndY.anchor = GridBagConstraints.EAST;
-			gbc_lblEndY.insets = new Insets(0, 0, 5, 5);
-			gbc_lblEndY.gridx = 0;
-			gbc_lblEndY.gridy = 3;
-			contentPanel.add(lblEndY, gbc_lblEndY);
+			JLabel lblEndPointCoordinates = new JLabel("End point coordinates:");
+			lblEndPointCoordinates.setFont(new Font("Tahoma", Font.PLAIN, 16));
+			GridBagConstraints gbc_lblEndPointCoordinates = new GridBagConstraints();
+			gbc_lblEndPointCoordinates.gridwidth = 2;
+			gbc_lblEndPointCoordinates.insets = new Insets(0, 0, 5, 0);
+			gbc_lblEndPointCoordinates.gridx = 0;
+			gbc_lblEndPointCoordinates.gridy = 4;
+			contentPanel.add(lblEndPointCoordinates, gbc_lblEndPointCoordinates);
 		}
 		{
-			textFieldY2 = new JTextField();
-			GridBagConstraints gbc_textFieldY2 = new GridBagConstraints();
-			gbc_textFieldY2.insets = new Insets(0, 0, 5, 0);
-			gbc_textFieldY2.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textFieldY2.gridx = 1;
-			gbc_textFieldY2.gridy = 3;
-			contentPanel.add(textFieldY2, gbc_textFieldY2);
-			textFieldY2.setColumns(10);
+			JLabel lblXCoordinate = new JLabel("X coordinate:");
+			lblXCoordinate.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			GridBagConstraints gbc_lblXCoordinate = new GridBagConstraints();
+			gbc_lblXCoordinate.insets = new Insets(0, 0, 5, 5);
+			gbc_lblXCoordinate.anchor = GridBagConstraints.WEST;
+			gbc_lblXCoordinate.gridx = 0;
+			gbc_lblXCoordinate.gridy = 5;
+			contentPanel.add(lblXCoordinate, gbc_lblXCoordinate);
 		}
 		{
-			JButton btnColor = new JButton("Color");
-			btnColor.addActionListener(new ActionListener() {
+			x2Field = new JTextField();
+			GridBagConstraints gbc_x2Field = new GridBagConstraints();
+			gbc_x2Field.insets = new Insets(0, 0, 5, 0);
+			gbc_x2Field.fill = GridBagConstraints.HORIZONTAL;
+			gbc_x2Field.gridx = 1;
+			gbc_x2Field.gridy = 5;
+			contentPanel.add(x2Field, gbc_x2Field);
+			x2Field.setColumns(10);
+		}
+		{
+			JLabel lblYKoordinata_1 = new JLabel("Y coordinate:");
+			lblYKoordinata_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			GridBagConstraints gbc_lblYKoordinata_1 = new GridBagConstraints();
+			gbc_lblYKoordinata_1.insets = new Insets(0, 0, 5, 5);
+			gbc_lblYKoordinata_1.anchor = GridBagConstraints.WEST;
+			gbc_lblYKoordinata_1.gridx = 0;
+			gbc_lblYKoordinata_1.gridy = 6;
+			contentPanel.add(lblYKoordinata_1, gbc_lblYKoordinata_1);
+		}
+		{
+			y2Field = new JTextField();
+			GridBagConstraints gbc_y2Field = new GridBagConstraints();
+			gbc_y2Field.insets = new Insets(0, 0, 5, 0);
+			gbc_y2Field.fill = GridBagConstraints.HORIZONTAL;
+			gbc_y2Field.gridx = 1;
+			gbc_y2Field.gridy = 6;
+			contentPanel.add(y2Field, gbc_y2Field);
+			y2Field.setColumns(10);
+		}
+		{
+			JButton colorBtn = new JButton("Color");
+			colorBtn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+
 					color = JColorChooser.showDialog(null, "Choose color", color);
 					if (color == null) {
 						color = Color.BLACK;
 					}
 				}
 			});
-			GridBagConstraints gbc_btnColor = new GridBagConstraints();
-			gbc_btnColor.insets = new Insets(0, 0, 0, 5);
-			gbc_btnColor.gridx = 0;
-			gbc_btnColor.gridy = 4;
-			contentPanel.add(btnColor, gbc_btnColor);
+			colorBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 13));
+			GridBagConstraints gbc_colorBtn = new GridBagConstraints();
+			gbc_colorBtn.gridwidth = 2;
+			gbc_colorBtn.gridx = 0;
+			gbc_colorBtn.gridy = 7;
+			contentPanel.add(colorBtn, gbc_colorBtn);
 		}
 		{
 			JPanel buttonPane = new JPanel();
+			buttonPane.setBackground(Color.LIGHT_GRAY);
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
@@ -165,53 +206,69 @@ public class DlgLine extends JDialog {
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						try {
-							int x1 = Integer.parseInt(textFieldX1.getText());
-							int y1 = Integer.parseInt(textFieldY1.getText());
-							int x2 = Integer.parseInt(textFieldX2.getText());
-							int y2 = Integer.parseInt(textFieldY2.getText());
-							
-							if(x1 < 0 || x2 <0 || y1 < 0 || y2 < 0) {
-								JOptionPane.showMessageDialog(null, "Numbers must be bigger than 0", "Error", JOptionPane.ERROR_MESSAGE);
+							int x1 = Integer.parseInt(xField.getText());
+							int y1 = Integer.parseInt(yField.getText());
+
+							int x2 = Integer.parseInt(x2Field.getText());
+							int y2 = Integer.parseInt(y2Field.getText());
+
+							if (x1 < 0 || y1 < 0) {
+								JOptionPane.showMessageDialog(null, "Start point coordinates must be greater than 0!", "Error",
+										JOptionPane.ERROR_MESSAGE);
 								return;
 							}
-							
+							if (x2 < 0 || y2 < 0) {
+								JOptionPane.showMessageDialog(null, "End point coordinates must be greater than 0!", "Error",
+										JOptionPane.ERROR_MESSAGE);
+								return;
+							}
+
 							line = new Line(new Point(x1, y1), new Point(x2, y2), color);
 							dispose();
+
 						} catch (Exception exception) {
-							JOptionPane.showMessageDialog(null, "Exception found", "Error", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "An error has occured.", "Error",
+									JOptionPane.ERROR_MESSAGE);
+							return;
 						}
+
 					}
 				});
+				okButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
+				cancelButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dispose();
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
 		}
 	}
-	public void setColor(Color color) {
-		this.color = color;
-	}
-	
-	public Line getLine() {
-		return this.line;
-	}
+
+	//geting coordinates for those tho points and setting them in text field
 	
 	public void setLine(Point startPoint, Point endPoint) {
-		textFieldX1.setText("" + startPoint.getX());
-		textFieldY1.setText("" + startPoint.getY());
-	
-		textFieldX2.setText("" + endPoint.getX());
-		textFieldY2.setText("" + endPoint.getY());
+		xField.setText("" + startPoint.getX());
+		yField.setText("" + startPoint.getY());
+
+		x2Field.setText("" + endPoint.getX());
+		y2Field.setText("" + endPoint.getY());
 	}
-	
-	public void setLine(Line line) {
-		setLine(line.getStartPoint(), line.getEndPoint());
-		setColor(line.getColor());
+
+	public Line getLine() {
+		return line;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
 	}
 
 }

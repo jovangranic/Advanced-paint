@@ -15,13 +15,14 @@ public class Line extends Shape {
 		this.startPoint = startPoint;
 		this.endPoint = endPoint;
 	}
+
 	public Line(Point startPoint, Point endPoint, Color color) {
 		this(startPoint, endPoint);
 		this.color = color;
 	}
 
-	public Line(Point startPoint, Point endPoint, boolean selected) {
-		this(startPoint, endPoint);
+	public Line(Point startPoint, Point endPoint, Color color, boolean selected) {
+		this(startPoint, endPoint, color);
 		this.selected = selected;
 	}
 
@@ -44,19 +45,19 @@ public class Line extends Shape {
 		return this.startPoint.distance(clickPoint.getX(), clickPoint.getY())
 				+ this.endPoint.distance(clickPoint.getX(), clickPoint.getY()) - length() <= 2;
 	}
-	
+
 	@Override
 	public void moveTo(int x, int y) {
 		startPoint.moveTo(x, y);
 		endPoint.moveTo(x, y);
 	}
-	
+
 	@Override
 	public void moveBy(int byX, int byY) {
 		startPoint.moveBy(byX, byY);
 		endPoint.moveBy(byX, byY);
 	}
-	
+
 	@Override
 	public int compareTo(Object obj) {
 		if (obj instanceof Line) {
@@ -67,7 +68,7 @@ public class Line extends Shape {
 	}
 
 	public Point getStartPoint() {
-		return this.startPoint; // ne sme poziv metode
+		return this.startPoint;
 	}
 
 	public void setStartPoint(Point startPoint) {
@@ -92,14 +93,13 @@ public class Line extends Shape {
 
 	@Override
 	public void draw(Graphics g) {
-		g.setColor(color);
-		g.drawLine(startPoint.getX(), startPoint.getY(), 
-				this.endPoint.getX(), endPoint.getY());
-		
-		if(isSelected()) {
+		g.setColor(this.color);
+		g.drawLine(startPoint.getX(), startPoint.getY(), this.endPoint.getX(), endPoint.getY());
+
+		if (isSelected()) {
 			g.setColor(Color.BLUE);
-			g.drawRect(startPoint.getX()-2, startPoint.getY()-2, 4, 4);
-			g.drawRect(endPoint.getX()-2, endPoint.getY()-2, 4, 4);
+			g.drawRect(startPoint.getX() - 2, startPoint.getY() - 2, 4, 4);
+			g.drawRect(endPoint.getX() - 2, endPoint.getY() - 2, 4, 4);
 			g.setColor(Color.black);
 		}
 	}
