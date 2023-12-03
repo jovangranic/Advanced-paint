@@ -13,7 +13,6 @@ import javax.swing.border.EmptyBorder;
 import geometry.Line;
 import geometry.Point;
 
-import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;

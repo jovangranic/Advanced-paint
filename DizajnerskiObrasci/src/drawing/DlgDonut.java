@@ -12,8 +12,6 @@ import javax.swing.border.EmptyBorder;
 
 import geometry.Donut;
 import geometry.Point;
-import geometry.Rectangle;
-
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;

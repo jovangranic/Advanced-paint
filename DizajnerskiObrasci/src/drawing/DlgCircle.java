@@ -24,7 +24,6 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextField;
-import java.awt.SystemColor;
 
 public class DlgCircle extends JDialog {
 
@@ -33,17 +32,11 @@ public class DlgCircle extends JDialog {
 	private JTextField textFieldY;
 	private JTextField textFieldRadius;
 
-	private Point center;
-	private int radius;
-
 	private Circle circle = null;
 
 	private Color edgeColor;
 	private Color fillColor;
 
-	private Color color;
-
-	
 	public static void main(String[] args) {
 		try {
 			DlgCircle dialog = new DlgCircle();
