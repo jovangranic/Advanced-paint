@@ -18,6 +18,7 @@ import command.RemoveShapeCmd;
 import command.SelectShapeCmd;
 import command.UpdateCircleCommand;
 import command.UpdateDonutCommand;
+import command.UpdateHexagonCommand;
 import command.UpdateLineCommand;
 import command.UpdatePointCommand;
 import command.UpdateRectangleCommand;
@@ -155,6 +156,15 @@ public class DrawingController {
 				startPoint = clickPosition;
 			}
 		}
+		
+		else if (frame.getToggleHexagon().isSelected()) {
+			DlgHexagon dlgHexagon = new DlgHexagon();
+			dlgHexagon.setPoint(clickPosition);
+			dlgHexagon.setColors(edgeColor, fillColor);
+			dlgHexagon.setVisible(true);
+			
+			shape = dlgHexagon.getHexagon();
+		}
 		if(shape != null) {
 			executeCommand(new AddShapeCmd(shape, model));
 		}
@@ -234,6 +244,17 @@ public class DrawingController {
 
 			if (circle != null) {
 				executeCommand(new UpdateCircleCommand((Circle)shape, dlgCircle.getCircle()));
+			}
+		}
+		
+		else if (shape instanceof HexagonAdapter) {
+			DlgHexagon dlgHexagon = new DlgHexagon();
+			dlgHexagon.setHexagon((HexagonAdapter) shape);
+			dlgHexagon.setVisible(true);
+			HexagonAdapter circle = dlgHexagon.getHexagon();
+
+			if (circle != null) {
+				executeCommand(new UpdateHexagonCommand((HexagonAdapter)shape, dlgHexagon.getHexagon()));
 			}
 		}
 	}

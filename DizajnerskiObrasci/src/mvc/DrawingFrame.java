@@ -37,6 +37,7 @@ public class DrawingFrame extends JFrame {
 	private JToggleButton toggleSelect;
 	private JButton btnUndo;
 	private JButton btnRedo;
+	private JToggleButton toggleHexagon;
 
 	/**
 	 * Launch the application.
@@ -75,7 +76,7 @@ public class DrawingFrame extends JFrame {
 		JPanel ShapeButtonPanel = new JPanel();
 		ShapeButtonPanel.setBackground(SystemColor.control);
 		contentPane.add(ShapeButtonPanel, BorderLayout.NORTH);
-		ShapeButtonPanel.setLayout(new GridLayout(0, 5, 0, 0));
+		ShapeButtonPanel.setLayout(new GridLayout(0, 6, 0, 0));
 
 		togglePoint = new JToggleButton("Point");
 		togglePoint.setSelected(true);
@@ -102,6 +103,11 @@ public class DrawingFrame extends JFrame {
 		toggleDonut.setBackground(SystemColor.control);
 		ShapeButtonPanel.add(toggleDonut);
 		Shapesbtngroup.add(toggleDonut);
+		
+		toggleHexagon = new JToggleButton("Hexagon");
+		toggleHexagon.setBackground(SystemColor.control);
+		Shapesbtngroup.add(toggleHexagon);
+		ShapeButtonPanel.add(toggleHexagon);
 
 		JPanel ModifyButtonspanel = new JPanel();
 		ModifyButtonspanel.setBackground(SystemColor.control);
@@ -212,5 +218,8 @@ public class DrawingFrame extends JFrame {
 	}
 	public void setController(DrawingController controller) {
 		this.controller = controller;
+	}
+	public JToggleButton getToggleHexagon() {
+		return toggleHexagon;
 	}
 }
