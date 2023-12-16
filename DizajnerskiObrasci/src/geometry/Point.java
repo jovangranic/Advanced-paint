@@ -105,4 +105,9 @@ public class Point extends Shape {
 		return "(" + x + "," + y + ")";
 	}
 
+	public void clone(Point point) {
+		this.x = point.x;
+		this.y = point.y;
+		this.color = point.color;
+	}
 }

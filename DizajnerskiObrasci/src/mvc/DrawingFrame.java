@@ -17,6 +17,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 public class DrawingFrame extends JFrame {
 
@@ -32,6 +35,8 @@ public class DrawingFrame extends JFrame {
 	private JToggleButton toggleCircle;
 	private JToggleButton toggleDonut;
 	private JToggleButton toggleSelect;
+	private JButton btnUndo;
+	private JButton btnRedo;
 
 	/**
 	 * Launch the application.
@@ -73,6 +78,7 @@ public class DrawingFrame extends JFrame {
 		ShapeButtonPanel.setLayout(new GridLayout(0, 5, 0, 0));
 
 		togglePoint = new JToggleButton("Point");
+		togglePoint.setSelected(true);
 		togglePoint.setBackground(SystemColor.control);
 		ShapeButtonPanel.add(togglePoint);
 		Shapesbtngroup.add(togglePoint);
@@ -100,27 +106,68 @@ public class DrawingFrame extends JFrame {
 		JPanel ModifyButtonspanel = new JPanel();
 		ModifyButtonspanel.setBackground(SystemColor.control);
 		contentPane.add(ModifyButtonspanel, BorderLayout.EAST);
-		ModifyButtonspanel.setLayout(new GridLayout(3, 1, 0, 0));
+		GridBagLayout gbl_ModifyButtonspanel = new GridBagLayout();
+		gbl_ModifyButtonspanel.columnWidths = new int[]{89, 0};
+		gbl_ModifyButtonspanel.rowHeights = new int[]{17, 28, 0, 0, 0, 0};
+		gbl_ModifyButtonspanel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_ModifyButtonspanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		ModifyButtonspanel.setLayout(gbl_ModifyButtonspanel);
 
 		toggleSelect = new JToggleButton("Select");
 		toggleSelect.setBackground(SystemColor.control);
-		ModifyButtonspanel.add(toggleSelect);
+		GridBagConstraints gbc_toggleSelect = new GridBagConstraints();
+		gbc_toggleSelect.fill = GridBagConstraints.BOTH;
+		gbc_toggleSelect.insets = new Insets(0, 0, 5, 0);
+		gbc_toggleSelect.gridx = 0;
+		gbc_toggleSelect.gridy = 0;
+		ModifyButtonspanel.add(toggleSelect, gbc_toggleSelect);
 		Shapesbtngroup.add(toggleSelect);
-
-		JButton buttonDelete = new JButton("Delete");
-		buttonDelete.setBackground(SystemColor.control);
-		ModifyButtonspanel.add(buttonDelete);
 
 		// Modifying
 
 		JButton buttonModify = new JButton("Modify");
 		buttonModify.setBackground(SystemColor.control);
-		ModifyButtonspanel.add(buttonModify);
+		GridBagConstraints gbc_buttonModify = new GridBagConstraints();
+		gbc_buttonModify.fill = GridBagConstraints.BOTH;
+		gbc_buttonModify.insets = new Insets(0, 0, 5, 0);
+		gbc_buttonModify.gridx = 0;
+		gbc_buttonModify.gridy = 1;
+		ModifyButtonspanel.add(buttonModify, gbc_buttonModify);
 		buttonModify.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.modify();
 			}
 		});
+
+		JButton buttonDelete = new JButton("Delete");
+		buttonDelete.setBackground(SystemColor.control);
+		GridBagConstraints gbc_buttonDelete = new GridBagConstraints();
+		gbc_buttonDelete.fill = GridBagConstraints.BOTH;
+		gbc_buttonDelete.insets = new Insets(0, 0, 5, 0);
+		gbc_buttonDelete.gridx = 0;
+		gbc_buttonDelete.gridy = 2;
+		ModifyButtonspanel.add(buttonDelete, gbc_buttonDelete);
+
+		btnUndo = new JButton("Undo");
+		btnUndo.setBackground(SystemColor.control);
+		btnUndo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		GridBagConstraints gbc_btnUndo = new GridBagConstraints();
+		gbc_btnUndo.insets = new Insets(0, 0, 5, 0);
+		gbc_btnUndo.fill = GridBagConstraints.BOTH;
+		gbc_btnUndo.gridx = 0;
+		gbc_btnUndo.gridy = 3;
+		ModifyButtonspanel.add(btnUndo, gbc_btnUndo);
+
+		btnRedo = new JButton("Redo");
+		btnRedo.setBackground(SystemColor.control);
+		GridBagConstraints gbc_btnRedo = new GridBagConstraints();
+		gbc_btnRedo.fill = GridBagConstraints.BOTH;
+		gbc_btnRedo.gridx = 0;
+		gbc_btnRedo.gridy = 4;
+		ModifyButtonspanel.add(btnRedo, gbc_btnRedo);
 		buttonDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.delete();

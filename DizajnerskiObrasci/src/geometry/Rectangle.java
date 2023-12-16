@@ -126,4 +126,13 @@ public class Rectangle extends ShapeSurface {
 			g.setColor(Color.black);
 		}
 	}
+	
+	public void clone(Rectangle rect) {
+		this.upperLeftPoint.setX(rect.upperLeftPoint.getX());
+		this.upperLeftPoint.setY(rect.upperLeftPoint.getY());
+		this.width = rect.width;
+		this.height = rect.height;
+		this.color = rect.color;
+		this.fillColor = rect.fillColor;
+	}
 }

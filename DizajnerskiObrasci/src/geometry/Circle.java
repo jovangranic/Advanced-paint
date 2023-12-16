@@ -118,4 +118,11 @@ public class Circle extends ShapeSurface {
 		}
 	}
 
+	public void clone(Circle circle) {
+		this.center.setX(circle.center.getX());
+		this.center.setY(circle.center.getY());
+		this.radius = circle.radius;
+		this.color = circle.color;
+		this.fillColor = circle.fillColor;
+	}
 }
