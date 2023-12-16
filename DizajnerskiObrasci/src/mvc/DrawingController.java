@@ -6,9 +6,21 @@ package mvc;
 
 import java.awt.Color;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Stack;
 
 import javax.swing.JOptionPane;
 
+import command.AddShapeCmd;
+import command.Command;
+import command.DeselectShapesCmd;
+import command.RemoveShapeCmd;
+import command.SelectShapeCmd;
+import command.UpdateCircleCommand;
+import command.UpdateDonutCommand;
+import command.UpdateLineCommand;
+import command.UpdatePointCommand;
+import command.UpdateRectangleCommand;
 import geometry.*;
 import drawing.*;
 
@@ -22,9 +34,33 @@ public class DrawingController {
 	private Color edgeColor = Color.black;
 	private Color fillColor = Color.white;
 	
+	private Stack<Command> undoStack = new Stack<>();
+	private Stack<Command> redoStack = new Stack<>();
+	
 	public DrawingController(DrawingModel model, DrawingFrame frame) {
 		this.model = model;
 		this.frame = frame;
+	}
+	
+	private void executeCommand(Command command) {
+		command.execute();
+		undoStack.push(command);
+		redoStack.clear();
+		frame.repaint();
+	}
+	
+	public void undo() {
+		Command cmd = undoStack.pop();
+		cmd.unexecute();
+		redoStack.push(cmd);
+		frame.repaint();
+	}
+	
+	public void redo() {
+		Command cmd = redoStack.pop();
+		cmd.execute();
+		undoStack.push(cmd);
+		frame.repaint();
 	}
 	
 	private int getSelected() {
@@ -39,18 +75,22 @@ public class DrawingController {
 	private void select(Point p) {
 		for (int i = model.getShapes().size() - 1; i >= 0; i--) {
 			if (model.get(i).contains(p.getX(), p.getY())) {
-				model.get(i).setSelected(true);
-				frame.repaint();
+				executeCommand(new SelectShapeCmd(model.get(i)));
 				return;
 			}
 		}
 	}
 	
 	private void deselectAll() {
+		ArrayList<Shape> selectedShapes = new ArrayList<Shape>();
 		for (int i = model.getShapes().size() - 1; i >= 0; i--) {
-			model.get(i).setSelected(false);
+			if(model.get(i).isSelected()) {
+				selectedShapes.add(model.get(i));
+			}
 		}
-		frame.repaint();
+		if(selectedShapes.size() > 0) {
+			executeCommand(new DeselectShapesCmd(selectedShapes));
+		}
 	}
 	
 	public void mouseClicked(MouseEvent e) {
@@ -63,16 +103,16 @@ public class DrawingController {
 			select(clickPosition);
 			return;
 		}
+		
+		Shape shape = null;
 
 		if (frame.getToggleCircle().isSelected()) {
 			DlgCircle dlgCircle = new DlgCircle();
 			dlgCircle.setPoint(clickPosition);
 			dlgCircle.setColors(edgeColor, fillColor);
 			dlgCircle.setVisible(true);
-
-			if (dlgCircle.getCircle() != null) {
-				model.add(dlgCircle.getCircle());
-			}
+			
+			shape = dlgCircle.getCircle();
 		}
 
 		else if (frame.getToggleDonut().isSelected()) {
@@ -80,10 +120,8 @@ public class DrawingController {
 			dlgDonut.setPoint(clickPosition);
 			dlgDonut.setColors(edgeColor, fillColor);
 			dlgDonut.setVisible(true);
-
-			if (dlgDonut.getDonut() != null) {
-				model.add(dlgDonut.getDonut());
-			}
+			
+			shape = dlgDonut.getDonut();
 		}
 
 		else if (frame.getToggleRectangle().isSelected()) {
@@ -92,9 +130,7 @@ public class DrawingController {
 			dlgRectangle.setColors(edgeColor, fillColor);
 			dlgRectangle.setVisible(true);
 
-			if (dlgRectangle.getRectangle() != null) {
-				model.add(dlgRectangle.getRectangle());
-			}
+			shape = dlgRectangle.getRectangle();
 		}
 
 		else if (frame.getTogglePoint().isSelected()) {
@@ -103,9 +139,7 @@ public class DrawingController {
 			dlgPoint.setColor(edgeColor);
 			dlgPoint.setVisible(true);
 
-			if (dlgPoint.getPoint() != null) {
-				model.add(dlgPoint.getPoint());
-			}
+			shape = dlgPoint.getPoint();
 		}
 
 		else if (frame.getToggleLine().isSelected()) {
@@ -115,15 +149,15 @@ public class DrawingController {
 				dlgLine.setColor(edgeColor);
 				dlgLine.setVisible(true);
 
-				if (dlgLine.getLine() != null) {
-					model.add(dlgLine.getLine());
-				}
+				shape = dlgLine.getLine();
 				startPoint = null;
 			} else {
 				startPoint = clickPosition;
 			}
 		}
-		frame.repaint();
+		if(shape != null) {
+			executeCommand(new AddShapeCmd(shape, model));
+		}
 	}
 	
 	public void delete(){
@@ -135,8 +169,7 @@ public class DrawingController {
 		}
 		if (JOptionPane.showConfirmDialog(null, "Do you really want to delete selected object?",
 				"Deleting selected object", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
-			model.remove(model.get(i));
-			frame.repaint();
+			executeCommand(new RemoveShapeCmd(model.get(i), model));
 		}
 	}
 	
@@ -156,9 +189,7 @@ public class DrawingController {
 			dlgPoint.setVisible(true);
 
 			if (dlgPoint.getPoint() != null) {
-				((Point) shape).setX(dlgPoint.getPoint().getX());
-				((Point) shape).setY(dlgPoint.getPoint().getY());
-				shape.moveTo(dlgPoint.getPoint().getX(), dlgPoint.getPoint().getY());
+				executeCommand(new UpdatePointCommand((Point)shape, dlgPoint.getPoint()));
 			}
 		}
 
@@ -169,9 +200,7 @@ public class DrawingController {
 			Line line = dlgLine.getLine();
 
 			if (line != null) {
-				((Line) shape).setStartPoint(line.getStartPoint());
-				((Line) shape).setEndPoint(line.getEndPoint());
-				shape.setColor(line.getColor());
+				executeCommand(new UpdateLineCommand((Line)shape, dlgLine.getLine()));
 			}
 		}
 
@@ -182,11 +211,7 @@ public class DrawingController {
 			Rectangle rect = dlgRectangle.getRectangle();
 
 			if (rect != null) {
-				((Rectangle) shape).setUpperLeftPoint(rect.getUpperLeftPoint());
-				((Rectangle) shape).setWidth(rect.getWidth());
-				((Rectangle) shape).setHeight(rect.getHeight());
-				shape.setColor(rect.getColor());
-				((Rectangle) shape).setFillColor(rect.getFillColor());
+				executeCommand(new UpdateRectangleCommand((Rectangle)shape, dlgRectangle.getRectangle()));
 			}
 		}
 
@@ -197,11 +222,7 @@ public class DrawingController {
 			Donut donut = dlgDonut.getDonut();
 
 			if (donut != null) {
-				((Donut) shape).setCenter(donut.getCenter());
-				((Donut) shape).setRadius(donut.getRadius());
-				((Donut) shape).setInnerRadius(donut.getInnerRadius());
-				shape.setColor(donut.getColor());
-				((Donut) shape).setFillColor(donut.getFillColor());
+				executeCommand(new UpdateDonutCommand((Donut)shape, dlgDonut.getDonut()));
 			}
 		}
 
@@ -212,15 +233,8 @@ public class DrawingController {
 			Circle circle = dlgCircle.getCircle();
 
 			if (circle != null) {
-				((Circle) shape).setCenter(circle.getCenter());
-				((Circle) shape).setRadius(circle.getRadius());
-				// shape.moveTo(dlgCircle.getCircle().getCenter().getX(),
-				// dlgCircle.getCircle().getCenter().getY());
-				shape.setColor(circle.getColor());
-				((Circle) shape).setFillColor(circle.getFillColor());
+				executeCommand(new UpdateCircleCommand((Circle)shape, dlgCircle.getCircle()));
 			}
 		}
-
-		frame.repaint();
 	}
 }

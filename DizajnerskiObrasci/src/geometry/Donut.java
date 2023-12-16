@@ -8,7 +8,7 @@ public class Donut extends Circle {
 	private int innerRadius;
 
 	public Donut() {
-
+		
 	}
 
 	public Donut(Point center, int radius, int innerRadius) {

@@ -152,6 +152,7 @@ public class DrawingFrame extends JFrame {
 		btnUndo.setBackground(SystemColor.control);
 		btnUndo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				controller.undo();
 			}
 		});
 		GridBagConstraints gbc_btnUndo = new GridBagConstraints();
@@ -162,6 +163,11 @@ public class DrawingFrame extends JFrame {
 		ModifyButtonspanel.add(btnUndo, gbc_btnUndo);
 
 		btnRedo = new JButton("Redo");
+		btnRedo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.redo();
+			}
+		});
 		btnRedo.setBackground(SystemColor.control);
 		GridBagConstraints gbc_btnRedo = new GridBagConstraints();
 		gbc_btnRedo.fill = GridBagConstraints.BOTH;

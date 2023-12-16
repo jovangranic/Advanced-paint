@@ -9,6 +9,7 @@ public class Rectangle extends ShapeSurface {
 	private int height;
 
 	public Rectangle() {
+		this.upperLeftPoint = new Point(); 
 	}
 
 	public Rectangle(Point upperLeftPoint, int width, int height) {

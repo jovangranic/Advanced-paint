@@ -9,6 +9,8 @@ public class Line extends Shape {
 	private Point endPoint;
 
 	public Line() {
+		startPoint = new Point();
+		endPoint = new Point();
 	}
 
 	public Line(Point startPoint, Point endPoint) {

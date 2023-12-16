@@ -8,7 +8,7 @@ public class Circle extends ShapeSurface {
 	private int radius;
 
 	public Circle() {
-
+		this.center = new Point();
 	}
 
 	public Circle(Point center, int radius) {
