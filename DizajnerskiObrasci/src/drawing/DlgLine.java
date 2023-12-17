@@ -188,7 +188,7 @@ public class DlgLine extends JDialog {
 					}
 				}
 			});
-			colorBtn.setFont(new Font("Bookman Old Style", Font.PLAIN, 13));
+			colorBtn.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			GridBagConstraints gbc_colorBtn = new GridBagConstraints();
 			gbc_colorBtn.gridwidth = 2;
 			gbc_colorBtn.gridx = 0;

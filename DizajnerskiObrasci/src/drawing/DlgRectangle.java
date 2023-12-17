@@ -192,7 +192,7 @@ public class DlgRectangle extends JDialog {
 					}
 				}
 			});
-			btnFillColor.setFont(new Font("Baskerville Old Face", Font.PLAIN, 14));
+			btnFillColor.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			GridBagConstraints gbc_btnFillColor = new GridBagConstraints();
 			gbc_btnFillColor.anchor = GridBagConstraints.EAST;
 			gbc_btnFillColor.insets = new Insets(0, 0, 5, 5);
@@ -208,7 +208,7 @@ public class DlgRectangle extends JDialog {
 					}
 				}
 			});
-			btnEdgeColor.setFont(new Font("Baskerville Old Face", Font.PLAIN, 14));
+			btnEdgeColor.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			GridBagConstraints gbc_btnEdgeColor = new GridBagConstraints();
 			gbc_btnEdgeColor.insets = new Insets(0, 0, 5, 5);
 			gbc_btnEdgeColor.anchor = GridBagConstraints.WEST;

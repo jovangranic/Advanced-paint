@@ -81,7 +81,7 @@ public class DlgCircle extends JDialog {
 		}
 		{
 			textFieldX = new JTextField();
-			textFieldX.setFont(new Font("Baskerville Old Face", Font.PLAIN, 15));
+			textFieldX.setFont(new Font("Tahoma", Font.PLAIN, 11));
 			GridBagConstraints gbc_textFieldX = new GridBagConstraints();
 			gbc_textFieldX.gridwidth = 2;
 			gbc_textFieldX.insets = new Insets(0, 0, 5, 0);
@@ -106,7 +106,7 @@ public class DlgCircle extends JDialog {
 		}
 		{
 			textFieldY = new JTextField();
-			textFieldY.setFont(new Font("Baskerville Old Face", Font.PLAIN, 15));
+			textFieldY.setFont(new Font("Tahoma", Font.PLAIN, 11));
 			GridBagConstraints gbc_textFieldY = new GridBagConstraints();
 			gbc_textFieldY.gridwidth = 2;
 			gbc_textFieldY.insets = new Insets(0, 0, 5, 0);

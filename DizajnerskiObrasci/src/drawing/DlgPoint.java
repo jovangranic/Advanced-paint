@@ -105,7 +105,7 @@ public class DlgPoint extends JDialog {
 			}
 			{
 				textFieldX = new JTextField();
-				textFieldX.setFont(new Font("Bookman Old Style", Font.PLAIN, 11));
+				textFieldX.setFont(new Font("Tahoma", Font.PLAIN, 11));
 				GridBagConstraints gbc_textFieldX = new GridBagConstraints();
 				gbc_textFieldX.gridwidth = 2;
 				gbc_textFieldX.insets = new Insets(0, 0, 5, 5);
@@ -128,7 +128,7 @@ public class DlgPoint extends JDialog {
 			}
 			{
 				textFieldY = new JTextField();
-				textFieldY.setFont(new Font("Bookman Old Style", Font.PLAIN, 11));
+				textFieldY.setFont(new Font("Tahoma", Font.PLAIN, 11));
 				GridBagConstraints gbc_textFieldY = new GridBagConstraints();
 				gbc_textFieldY.gridwidth = 2;
 				gbc_textFieldY.insets = new Insets(0, 0, 5, 5);

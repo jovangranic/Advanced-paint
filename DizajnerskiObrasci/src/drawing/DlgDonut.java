@@ -94,7 +94,7 @@ public class DlgDonut extends JDialog {
 		}
 		{
 			xField = new JTextField();
-			xField.setFont(new Font("Baskerville Old Face", Font.PLAIN, 15));
+			xField.setFont(new Font("Tahoma", Font.PLAIN, 11));
 			GridBagConstraints gbc_xField = new GridBagConstraints();
 			gbc_xField.insets = new Insets(0, 0, 5, 5);
 			gbc_xField.fill = GridBagConstraints.HORIZONTAL;
@@ -116,7 +116,7 @@ public class DlgDonut extends JDialog {
 		}
 		{
 			yField = new JTextField();
-			yField.setFont(new Font("Bookman Old Style", Font.PLAIN, 15));
+			yField.setFont(new Font("Tahoma", Font.PLAIN, 11));
 			GridBagConstraints gbc_yField = new GridBagConstraints();
 			gbc_yField.insets = new Insets(0, 0, 5, 5);
 			gbc_yField.fill = GridBagConstraints.HORIZONTAL;
@@ -137,7 +137,7 @@ public class DlgDonut extends JDialog {
 		}
 		{
 			outerRadiusField = new JTextField();
-			outerRadiusField.setFont(new Font("Bookman Old Style", Font.PLAIN, 15));
+			outerRadiusField.setFont(new Font("Tahoma", Font.PLAIN, 11));
 			GridBagConstraints gbc_outerRadiusField = new GridBagConstraints();
 			gbc_outerRadiusField.insets = new Insets(0, 0, 5, 5);
 			gbc_outerRadiusField.fill = GridBagConstraints.HORIZONTAL;
@@ -158,7 +158,7 @@ public class DlgDonut extends JDialog {
 		}
 		{
 			innerRadiusField = new JTextField();
-			innerRadiusField.setFont(new Font("Bookman Old Style", Font.PLAIN, 15));
+			innerRadiusField.setFont(new Font("Tahoma", Font.PLAIN, 11));
 			GridBagConstraints gbc_innerRadiusField = new GridBagConstraints();
 			gbc_innerRadiusField.insets = new Insets(0, 0, 5, 5);
 			gbc_innerRadiusField.fill = GridBagConstraints.HORIZONTAL;
@@ -171,7 +171,7 @@ public class DlgDonut extends JDialog {
 		}
 		{
 			JButton innerColorbtn = new JButton("Inner color");
-			innerColorbtn.setFont(new Font("Baskerville Old Face", Font.PLAIN, 13));
+			innerColorbtn.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			innerColorbtn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 
@@ -189,7 +189,7 @@ public class DlgDonut extends JDialog {
 			contentPanel.add(innerColorbtn, gbc_innerColorbtn);
 		}
 		JButton edgeColorbtn = new JButton("Edge color");
-		edgeColorbtn.setFont(new Font("Baskerville Old Face", Font.PLAIN, 13));
+		edgeColorbtn.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		edgeColorbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
