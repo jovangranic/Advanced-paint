@@ -77,6 +77,15 @@ public class DrawingController {
 		return -1;
 	}
 	
+	private Shape getShapeAt(Point p) {
+		for (int i = model.getShapes().size() - 1; i >= 0; i--) {
+			if (model.get(i).contains(p.getX(), p.getY())) {
+				return model.get(i);
+			}
+		}
+		return null;
+	}
+	
 	private void select(Point p) {
 		for (int i = model.getShapes().size() - 1; i >= 0; i--) {
 			if (model.get(i).contains(p.getX(), p.getY())) {
@@ -101,11 +110,20 @@ public class DrawingController {
 	public void mouseClicked(MouseEvent e) {
 
 		Point clickPosition = new Point(e.getX(), e.getY());
+		Shape clicked = getShapeAt(clickPosition);
 
-		deselectAll();
+		if (clicked == null)
+			deselectAll();
 
 		if (frame.getToggleSelect().isSelected()) {
-			select(clickPosition);
+			if (clicked == null)
+				return;
+			
+			if (clicked.isSelected()) {
+				executeCommand(new DeselectShapesCmd(clicked));
+			} else {
+				executeCommand(new SelectShapeCmd(clicked));
+			}
 			return;
 		}
 		
@@ -175,16 +193,13 @@ public class DrawingController {
 	}
 	
 	public void delete(){
-		int i = getSelected();
-		if (i == -1) {
-			JOptionPane.showMessageDialog(null, "Select an object to delete first!", "Error!",
-					JOptionPane.ERROR_MESSAGE);
-			return;
+		ArrayList<Shape> selectedShapes = new ArrayList<Shape>();
+		for (int i = 0; i < model.getShapes().size(); i++) {
+			if (model.get(i).isSelected()) {
+				selectedShapes.add(model.get(i));
+			}
 		}
-		if (JOptionPane.showConfirmDialog(null, "Do you really want to delete selected object?",
-				"Deleting selected object", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
-			executeCommand(new RemoveShapeCmd(model.get(i), model));
-		}
+		executeCommand(new RemoveShapeCmd(selectedShapes, model));
 	}
 	
 	public void modify() {

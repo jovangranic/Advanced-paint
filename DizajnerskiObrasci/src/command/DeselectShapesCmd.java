@@ -9,6 +9,11 @@ public class DeselectShapesCmd implements Command {
 	public DeselectShapesCmd(ArrayList<Shape> selectedShapes) {
 		this.selectedShapes = selectedShapes;
 	}
+	
+	public DeselectShapesCmd(Shape selectedShape) {
+		this.selectedShapes = new ArrayList<Shape>();
+		this.selectedShapes.add(selectedShape);
+	}
 
 	@Override
 	public void execute() {
