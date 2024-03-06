@@ -12,10 +12,14 @@ import java.util.Stack;
 import javax.swing.JOptionPane;
 
 import command.AddShapeCmd;
+import command.BringShapeToBackCmd;
+import command.BringShapeToFrontCmd;
 import command.Command;
 import command.DeselectShapesCmd;
 import command.RemoveShapeCmd;
 import command.SelectShapeCmd;
+import command.ShapeToBackCmd;
+import command.ShapeToFrontCmd;
 import command.UpdateCircleCommand;
 import command.UpdateDonutCommand;
 import command.UpdateHexagonCommand;
@@ -257,5 +261,29 @@ public class DrawingController {
 				executeCommand(new UpdateHexagonCommand((HexagonAdapter)shape, dlgHexagon.getHexagon()));
 			}
 		}
+	}
+	
+	public void shapeToBack () {
+		int i = getSelected();
+		ShapeToBackCmd back = new ShapeToBackCmd(model.get(i), model);
+		executeCommand(back);
+	}
+	
+	public void shapeToFront () {
+		int i = getSelected();
+		ShapeToFrontCmd front = new ShapeToFrontCmd(model.get(i), model);
+		executeCommand(front);
+	}
+	
+	public void bringShapeToBack () {
+		int i = getSelected();
+		BringShapeToBackCmd toBack = new BringShapeToBackCmd(model.get(i), model);
+		executeCommand(toBack);
+	}
+	
+	public void bringShapeToFront () {
+		int i = getSelected();
+		BringShapeToFrontCmd toFront = new BringShapeToFrontCmd(model.get(i), model);
+		executeCommand(toFront);
 	}
 }

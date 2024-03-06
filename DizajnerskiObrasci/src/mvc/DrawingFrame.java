@@ -38,6 +38,10 @@ public class DrawingFrame extends JFrame {
 	private JButton btnUndo;
 	private JButton btnRedo;
 	private JToggleButton toggleHexagon;
+	private JButton btnToFront;
+	private JButton btnToBack;
+	private JButton btnBringToFront;
+	private JButton btnBringToBack;
 
 	/**
 	 * Launch the application.
@@ -114,9 +118,9 @@ public class DrawingFrame extends JFrame {
 		contentPane.add(ModifyButtonspanel, BorderLayout.EAST);
 		GridBagLayout gbl_ModifyButtonspanel = new GridBagLayout();
 		gbl_ModifyButtonspanel.columnWidths = new int[]{89, 0};
-		gbl_ModifyButtonspanel.rowHeights = new int[]{17, 28, 0, 0, 0, 0};
+		gbl_ModifyButtonspanel.rowHeights = new int[]{17, 28, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_ModifyButtonspanel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_ModifyButtonspanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_ModifyButtonspanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		ModifyButtonspanel.setLayout(gbl_ModifyButtonspanel);
 
 		toggleSelect = new JToggleButton("Select");
@@ -176,10 +180,66 @@ public class DrawingFrame extends JFrame {
 		});
 		btnRedo.setBackground(SystemColor.control);
 		GridBagConstraints gbc_btnRedo = new GridBagConstraints();
+		gbc_btnRedo.insets = new Insets(0, 0, 5, 0);
 		gbc_btnRedo.fill = GridBagConstraints.BOTH;
 		gbc_btnRedo.gridx = 0;
 		gbc_btnRedo.gridy = 4;
 		ModifyButtonspanel.add(btnRedo, gbc_btnRedo);
+		
+		btnToFront = new JButton("To Front");
+		btnToFront.setBackground(SystemColor.control);
+		btnToFront.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.shapeToFront();
+			}
+		});
+		GridBagConstraints gbc_btnToFront = new GridBagConstraints();
+		gbc_btnToFront.insets = new Insets(0, 0, 5, 0);
+		gbc_btnToFront.fill = GridBagConstraints.BOTH;
+		gbc_btnToFront.gridx = 0;
+		gbc_btnToFront.gridy = 5;
+		ModifyButtonspanel.add(btnToFront, gbc_btnToFront);
+		
+		btnToBack = new JButton("To Back");
+		btnToBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.shapeToBack();
+			}
+		});
+		btnToBack.setBackground(SystemColor.control);
+		GridBagConstraints gbc_btnToBack = new GridBagConstraints();
+		gbc_btnToBack.fill = GridBagConstraints.BOTH;
+		gbc_btnToBack.insets = new Insets(0, 0, 5, 0);
+		gbc_btnToBack.gridx = 0;
+		gbc_btnToBack.gridy = 6;
+		ModifyButtonspanel.add(btnToBack, gbc_btnToBack);
+		
+		btnBringToFront = new JButton("Bring To Front");
+		btnBringToFront.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.bringShapeToFront();
+			}
+		});
+		btnBringToFront.setBackground(SystemColor.control);
+		GridBagConstraints gbc_btnBringToFront = new GridBagConstraints();
+		gbc_btnBringToFront.fill = GridBagConstraints.BOTH;
+		gbc_btnBringToFront.insets = new Insets(0, 0, 5, 0);
+		gbc_btnBringToFront.gridx = 0;
+		gbc_btnBringToFront.gridy = 7;
+		ModifyButtonspanel.add(btnBringToFront, gbc_btnBringToFront);
+		
+		btnBringToBack = new JButton("Bring To Back");
+		btnBringToBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.bringShapeToBack();
+			}
+		});
+		btnBringToBack.setBackground(SystemColor.control);
+		GridBagConstraints gbc_btnBringToBack = new GridBagConstraints();
+		gbc_btnBringToBack.fill = GridBagConstraints.BOTH;
+		gbc_btnBringToBack.gridx = 0;
+		gbc_btnBringToBack.gridy = 8;
+		ModifyButtonspanel.add(btnBringToBack, gbc_btnBringToBack);
 		buttonDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.delete();
