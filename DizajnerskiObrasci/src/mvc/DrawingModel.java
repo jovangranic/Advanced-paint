@@ -8,12 +8,12 @@ public class DrawingModel {
 	
 	public ArrayList<Shape> shapes = new ArrayList<Shape>();
 	
-	public void add(Shape p) {
-		shapes.add(p);
+	public void add(Shape s) {
+		shapes.add(s);
 	}
 	
-	public void remove(Shape p) {
-		shapes.remove(p);
+	public void remove(Shape s) {
+		shapes.remove(s);
 	}
 	
 	public Shape get(int index) {
