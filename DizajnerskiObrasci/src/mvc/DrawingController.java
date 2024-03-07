@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import javax.swing.JColorChooser;
 import javax.swing.JOptionPane;
 
 import command.AddShapeCmd;
@@ -300,5 +301,19 @@ public class DrawingController {
 		int i = getSelected();
 		BringShapeToFrontCmd toFront = new BringShapeToFrontCmd(model.get(i), model);
 		executeCommand(toFront);
+	}
+	
+	public void setEdgeColor() {
+		Color color = JColorChooser.showDialog(frame, "Choose edge color", edgeColor);
+		if(color != null) {
+			this.edgeColor = color;
+		}
+	}
+	
+	public void setFillColor() {
+		Color color = JColorChooser.showDialog(frame, "Choose fill color", fillColor);
+		if(color != null) {
+			this.fillColor = color;
+		}
 	}
 }

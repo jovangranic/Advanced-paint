@@ -42,6 +42,8 @@ public class DrawingFrame extends JFrame {
 	private JButton btnToBack;
 	private JButton btnBringToFront;
 	private JButton btnBringToBack;
+	private JButton btnEdgeColor;
+	private JButton btnFillColor;
 
 	/**
 	 * Launch the application.
@@ -118,9 +120,9 @@ public class DrawingFrame extends JFrame {
 		contentPane.add(ModifyButtonspanel, BorderLayout.EAST);
 		GridBagLayout gbl_ModifyButtonspanel = new GridBagLayout();
 		gbl_ModifyButtonspanel.columnWidths = new int[]{89, 0};
-		gbl_ModifyButtonspanel.rowHeights = new int[]{17, 28, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_ModifyButtonspanel.rowHeights = new int[]{17, 28, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_ModifyButtonspanel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_ModifyButtonspanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_ModifyButtonspanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		ModifyButtonspanel.setLayout(gbl_ModifyButtonspanel);
 
 		toggleSelect = new JToggleButton("Select");
@@ -236,10 +238,38 @@ public class DrawingFrame extends JFrame {
 		});
 		btnBringToBack.setBackground(SystemColor.control);
 		GridBagConstraints gbc_btnBringToBack = new GridBagConstraints();
+		gbc_btnBringToBack.insets = new Insets(0, 0, 5, 0);
 		gbc_btnBringToBack.fill = GridBagConstraints.BOTH;
 		gbc_btnBringToBack.gridx = 0;
 		gbc_btnBringToBack.gridy = 8;
 		ModifyButtonspanel.add(btnBringToBack, gbc_btnBringToBack);
+		
+		btnEdgeColor = new JButton("Edge Color");
+		btnEdgeColor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.setEdgeColor();
+			}
+		});
+		btnEdgeColor.setBackground(SystemColor.control);
+		GridBagConstraints gbc_btnEdgeColor = new GridBagConstraints();
+		gbc_btnEdgeColor.fill = GridBagConstraints.BOTH;
+		gbc_btnEdgeColor.insets = new Insets(0, 0, 5, 0);
+		gbc_btnEdgeColor.gridx = 0;
+		gbc_btnEdgeColor.gridy = 9;
+		ModifyButtonspanel.add(btnEdgeColor, gbc_btnEdgeColor);
+		
+		btnFillColor = new JButton("Fill Color");
+		btnFillColor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.setFillColor();
+			}
+		});
+		btnFillColor.setBackground(SystemColor.control);
+		GridBagConstraints gbc_btnFillColor = new GridBagConstraints();
+		gbc_btnFillColor.fill = GridBagConstraints.BOTH;
+		gbc_btnFillColor.gridx = 0;
+		gbc_btnFillColor.gridy = 10;
+		ModifyButtonspanel.add(btnFillColor, gbc_btnFillColor);
 		buttonDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.delete();
