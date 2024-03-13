@@ -44,6 +44,8 @@ public class DrawingFrame extends JFrame {
 	private JButton btnBringToBack;
 	private JButton btnEdgeColor;
 	private JButton btnFillColor;
+	private JButton buttonModify;
+	private JButton buttonDelete;
 
 	/**
 	 * Launch the application.
@@ -137,7 +139,8 @@ public class DrawingFrame extends JFrame {
 
 		// Modifying
 
-		JButton buttonModify = new JButton("Modify");
+		buttonModify = new JButton("Modify");
+		buttonModify.setEnabled(false);
 		buttonModify.setBackground(SystemColor.control);
 		GridBagConstraints gbc_buttonModify = new GridBagConstraints();
 		gbc_buttonModify.fill = GridBagConstraints.BOTH;
@@ -151,7 +154,8 @@ public class DrawingFrame extends JFrame {
 			}
 		});
 
-		JButton buttonDelete = new JButton("Delete");
+		buttonDelete = new JButton("Delete");
+		buttonDelete.setEnabled(false);
 		buttonDelete.setBackground(SystemColor.control);
 		GridBagConstraints gbc_buttonDelete = new GridBagConstraints();
 		gbc_buttonDelete.fill = GridBagConstraints.BOTH;
@@ -161,6 +165,7 @@ public class DrawingFrame extends JFrame {
 		ModifyButtonspanel.add(buttonDelete, gbc_buttonDelete);
 
 		btnUndo = new JButton("Undo");
+		btnUndo.setEnabled(false);
 		btnUndo.setBackground(SystemColor.control);
 		btnUndo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -175,6 +180,7 @@ public class DrawingFrame extends JFrame {
 		ModifyButtonspanel.add(btnUndo, gbc_btnUndo);
 
 		btnRedo = new JButton("Redo");
+		btnRedo.setEnabled(false);
 		btnRedo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.redo();
@@ -189,6 +195,7 @@ public class DrawingFrame extends JFrame {
 		ModifyButtonspanel.add(btnRedo, gbc_btnRedo);
 		
 		btnToFront = new JButton("To Front");
+		btnToFront.setEnabled(false);
 		btnToFront.setBackground(SystemColor.control);
 		btnToFront.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -203,6 +210,7 @@ public class DrawingFrame extends JFrame {
 		ModifyButtonspanel.add(btnToFront, gbc_btnToFront);
 		
 		btnToBack = new JButton("To Back");
+		btnToBack.setEnabled(false);
 		btnToBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.shapeToBack();
@@ -217,6 +225,7 @@ public class DrawingFrame extends JFrame {
 		ModifyButtonspanel.add(btnToBack, gbc_btnToBack);
 		
 		btnBringToFront = new JButton("Bring To Front");
+		btnBringToFront.setEnabled(false);
 		btnBringToFront.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.bringShapeToFront();
@@ -231,6 +240,7 @@ public class DrawingFrame extends JFrame {
 		ModifyButtonspanel.add(btnBringToFront, gbc_btnBringToFront);
 		
 		btnBringToBack = new JButton("Bring To Back");
+		btnBringToBack.setEnabled(false);
 		btnBringToBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.bringShapeToBack();
@@ -311,5 +321,35 @@ public class DrawingFrame extends JFrame {
 	}
 	public JToggleButton getToggleHexagon() {
 		return toggleHexagon;
+	}
+	public JButton getButtonModify() {
+		return buttonModify;
+	}
+	public JButton getButtonDelete() {
+		return buttonDelete;
+	}
+
+	public JButton getBtnUndo() {
+		return btnUndo;
+	}
+
+	public JButton getBtnToFront() {
+		return btnToFront;
+	}
+
+	public JButton getBtnToBack() {
+		return btnToBack;
+	}
+
+	public JButton getBtnBringToFront() {
+		return btnBringToFront;
+	}
+
+	public JButton getBtnBringToBack() {
+		return btnBringToBack;
+	}
+
+	public JButton getBtnRedo() {
+		return btnRedo;
 	}
 }

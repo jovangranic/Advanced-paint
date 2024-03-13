@@ -28,6 +28,8 @@ import command.UpdateLineCommand;
 import command.UpdatePointCommand;
 import command.UpdateRectangleCommand;
 import geometry.*;
+import observer.ControlsObserver;
+import observer.ObservableControls;
 import drawing.*;
 
 public class DrawingController {
@@ -43,15 +45,21 @@ public class DrawingController {
 	private Stack<Command> undoStack = new Stack<>();
 	private Stack<Command> redoStack = new Stack<>();
 	
+	private ObservableControls controls = new ObservableControls();
+	private ControlsObserver observer;
+	
 	public DrawingController(DrawingModel model, DrawingFrame frame) {
 		this.model = model;
 		this.frame = frame;
+		this.observer = new ControlsObserver(frame);
+		this.controls.addListener(observer);
 	}
 	
 	private void executeCommand(Command command) {
 		command.execute();
 		undoStack.push(command);
 		redoStack.clear();
+		updateControls();
 		frame.repaint();
 	}
 	
@@ -59,6 +67,7 @@ public class DrawingController {
 		Command cmd = undoStack.pop();
 		cmd.unexecute();
 		redoStack.push(cmd);
+		updateControls();
 		frame.repaint();
 	}
 	
@@ -66,7 +75,55 @@ public class DrawingController {
 		Command cmd = redoStack.pop();
 		cmd.execute();
 		undoStack.push(cmd);
+		updateControls();
 		frame.repaint();
+	}
+	
+	private void updateControls() {
+		int selectedShapes = getSelectedShapesAmount();
+		if (selectedShapes == 1) { 			// one shape selected
+			controls.setModify(true);
+			controls.setDelete(true);
+			if (getSelected() == 0) {
+				controls.setToBack(false);
+				controls.setBringToBack(false);
+			} else {
+				controls.setToBack(true);
+				controls.setBringToBack(true);
+			}
+			if (getSelected() == model.getShapes().size() - 1) {
+				controls.setToFront(false);
+				controls.setBringToFront(false);
+			} else {
+				controls.setToFront(true);
+				controls.setBringToFront(true);
+			}
+		} else if (selectedShapes > 0) { 	// multiple shapes selected
+			controls.setModify(false);
+			controls.setDelete(true);
+			controls.setToBack(false);
+			controls.setBringToBack(false);
+			controls.setToFront(false);
+			controls.setBringToFront(false);
+		} else {							// no shapes selected
+			controls.setModify(false);
+			controls.setDelete(false);
+			controls.setToBack(false);
+			controls.setBringToBack(false);
+			controls.setToFront(false);
+			controls.setBringToFront(false);
+		}
+		
+		if (undoStack.size() > 0) {
+			controls.setUndo(true);
+		} else {
+			controls.setUndo(false);
+		}
+		if (redoStack.size() > 0) {
+			controls.setRedo(true);
+		} else {
+			controls.setRedo(false);
+		}
 	}
 	
 	private int getSelected() {
@@ -76,6 +133,16 @@ public class DrawingController {
 			}
 		}
 		return -1;
+	}
+	
+	private int getSelectedShapesAmount() {
+		int amount = 0;
+		for (int i = model.getShapes().size() - 1; i >= 0; i--) {
+			if (model.get(i).isSelected()) {
+				amount++;
+			}
+		}
+		return amount;
 	}
 	
 	private Shape getShapeAt(Point p) {
