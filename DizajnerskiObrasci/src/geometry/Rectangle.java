@@ -103,8 +103,10 @@ public class Rectangle extends ShapeSurface {
 		return upperLeftPoint;
 	}
 
+	@Override
 	public String toString() {
-		return "Upper left point:" + upperLeftPoint + ", width =" + width + ",height = " + height;
+		return "Rectangle [x=" + upperLeftPoint.getX() + ", y=" + upperLeftPoint.getY() + ", width=" + width + ", height=" + height
+				+ ", fillColor=" + fillColor + ", color=" + color + "]";
 	}
 
 	@Override

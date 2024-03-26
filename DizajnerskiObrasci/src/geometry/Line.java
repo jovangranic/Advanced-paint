@@ -89,8 +89,13 @@ public class Line extends Shape {
 		return startPoint.distance(endPoint.getX(), getEndPoint().getX());
 	}
 
+	@Override
 	public String toString() {
-		return startPoint + "-- >" + endPoint;
+		return "Line [startX=" + startPoint.getX() +  
+				", startY=" + startPoint.getY() + 
+				", endX=" + endPoint.getX() +
+				", endY=" + endPoint.getY() + 
+				", color=" + color + "]";
 	}
 
 	@Override

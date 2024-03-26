@@ -91,8 +91,10 @@ public class Circle extends ShapeSurface {
 		this.radius = radius;
 	}
 
+	@Override
 	public String toString() {
-		return "Center=" + center + ", radius=" + radius;
+		return "Circle [x=" + center.getX() + ", y=" + center.getY() + ", radius=" + radius + ", fillColor=" + fillColor + ", color=" + color
+				+ "]";
 	}
 
 	@Override

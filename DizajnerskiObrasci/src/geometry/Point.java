@@ -101,8 +101,9 @@ public class Point extends Shape {
 		this.y = y;
 	}
 
+	@Override
 	public String toString() {
-		return "(" + x + "," + y + ")";
+		return "Point [x=" + x + ", y=" + y + ", color=" + color + "]";
 	}
 
 	public void clone(Point point) {

@@ -120,4 +120,10 @@ public class HexagonAdapter extends ShapeSurface {
 		this.setColor(hexagon.getColor());
 		this.setFillColor(hexagon.getFillColor());
 	}
+
+	@Override
+	public String toString() {
+		return "HexagonAdapter [x=" + getX() + ", y=" + getY() + ", r=" + getR() + ", color="
+				+ getColor() + ", fillColor=" + getFillColor() + "]";
+	}
 }
