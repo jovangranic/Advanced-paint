@@ -6,6 +6,11 @@ import mvc.DrawingModel;
 public class BringShapeToBackCmd implements Command {
 
 	private Shape shape;
+	@Override
+	public String toString() {
+		return "Bring To Back [shape=" + shape + "]";
+	}
+
 	private DrawingModel model;
 	private int temp;
 	

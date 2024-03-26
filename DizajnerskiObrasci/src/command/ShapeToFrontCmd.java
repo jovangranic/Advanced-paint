@@ -25,4 +25,8 @@ public class ShapeToFrontCmd implements Command {
 		Collections.swap(model.getShapes(), model.indexOf(shape), model.indexOf(shape) - 1);
 	}
 
+	@Override
+	public String toString() {
+		return "To Front [shape=" + shape + "]";
+	}
 }

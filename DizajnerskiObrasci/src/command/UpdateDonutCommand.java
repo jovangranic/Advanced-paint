@@ -3,6 +3,11 @@ package command;
 import geometry.Donut;
 
 public class UpdateDonutCommand implements Command {
+	@Override
+	public String toString() {
+		return "Update Donut [donut=" + donut + ", newState=" + newState + "]";
+	}
+
 	private Donut donut;
 	private Donut newState;
 	private Donut original = new Donut();

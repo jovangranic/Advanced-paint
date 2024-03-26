@@ -3,6 +3,11 @@ package command;
 import geometry.Circle;
 
 public class UpdateCircleCommand implements Command {
+	@Override
+	public String toString() {
+		return "Update Circle [circle=" + circle + ", newState=" + newState + "]";
+	}
+
 	private Circle circle;
 	private Circle newState;
 	private Circle original = new Circle();

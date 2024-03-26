@@ -20,6 +20,10 @@ import java.awt.SystemColor;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import java.awt.Dimension;
+import javax.swing.ScrollPaneConstants;
 
 public class DrawingFrame extends JFrame {
 
@@ -46,6 +50,10 @@ public class DrawingFrame extends JFrame {
 	private JButton btnFillColor;
 	private JButton buttonModify;
 	private JButton buttonDelete;
+	private JScrollPane scrollPane;
+	private JPanel panel;
+	private JScrollPane scrollPane_1;
+	private JTextArea textArea;
 
 	/**
 	 * Launch the application.
@@ -280,6 +288,20 @@ public class DrawingFrame extends JFrame {
 		gbc_btnFillColor.gridx = 0;
 		gbc_btnFillColor.gridy = 10;
 		ModifyButtonspanel.add(btnFillColor, gbc_btnFillColor);
+		
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setPreferredSize(new Dimension(150, 2));
+		contentPane.add(scrollPane, BorderLayout.WEST);
+		
+		panel = new JPanel();
+		scrollPane.setViewportView(panel);
+		panel.setLayout(new BorderLayout(0, 0));
+		
+		textArea = new JTextArea();
+		panel.add(textArea, BorderLayout.CENTER);
+		
+		
 		buttonDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.delete();
@@ -352,4 +374,9 @@ public class DrawingFrame extends JFrame {
 	public JButton getBtnRedo() {
 		return btnRedo;
 	}
+
+	public JTextArea getTextArea() {
+		return textArea;
+	}
+
 }

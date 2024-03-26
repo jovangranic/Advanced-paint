@@ -1,12 +1,15 @@
 package command;
 
 import geometry.Shape;
+import mvc.DrawingModel;
 
 public class SelectShapeCmd implements Command {
 	private Shape shape;
+	private DrawingModel model;
 
-	public SelectShapeCmd(Shape shape) {
+	public SelectShapeCmd(Shape shape, DrawingModel model) {
 		this.shape = shape;
+		this.model = model;
 	}
 
 	@Override
@@ -17,6 +20,11 @@ public class SelectShapeCmd implements Command {
 	@Override
 	public void unexecute() {
 		shape.setSelected(false);
+	}
+
+	@Override
+	public String toString() {
+		return "Select [index=" + model.indexOf(shape) + "]";
 	}
 
 }

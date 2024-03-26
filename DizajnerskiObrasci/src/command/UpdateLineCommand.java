@@ -23,4 +23,9 @@ public class UpdateLineCommand implements Command {
 		line.clone(original);
 	}
 
+	@Override
+	public String toString() {
+		return "Update Line [line=" + line + ", newState=" + newState + "]";
+	}
+
 }

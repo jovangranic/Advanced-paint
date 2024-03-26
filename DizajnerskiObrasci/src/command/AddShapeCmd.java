@@ -4,6 +4,11 @@ import geometry.Shape;
 import mvc.DrawingModel;
 
 public class AddShapeCmd implements Command {
+	@Override
+	public String toString() {
+		return "Add [shape=" + shape + "]";
+	}
+
 	private Shape shape;
 	private DrawingModel model;
 

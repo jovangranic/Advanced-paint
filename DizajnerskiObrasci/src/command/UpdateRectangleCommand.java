@@ -23,4 +23,9 @@ public class UpdateRectangleCommand implements Command {
 		rectangle.clone(original);
 	}
 
+	@Override
+	public String toString() {
+		return "Update Rectangle [rectangle=" + rectangle + ", newState=" + newState + "]";
+	}
+
 }

@@ -3,6 +3,11 @@ package command;
 import geometry.HexagonAdapter;
 
 public class UpdateHexagonCommand implements Command {
+	@Override
+	public String toString() {
+		return "Update Hexagon [hexagon=" + hexagon + ", newState=" + newState + "]";
+	}
+
 	private HexagonAdapter hexagon;
 	private HexagonAdapter newState;
 	private HexagonAdapter original = new HexagonAdapter();

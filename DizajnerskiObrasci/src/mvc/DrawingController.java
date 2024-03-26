@@ -60,6 +60,7 @@ public class DrawingController {
 		undoStack.push(command);
 		redoStack.clear();
 		updateControls();
+		frame.getTextArea().append(command.toString() + '\n');
 		frame.repaint();
 	}
 	
@@ -68,6 +69,7 @@ public class DrawingController {
 		cmd.unexecute();
 		redoStack.push(cmd);
 		updateControls();
+		frame.getTextArea().append("Undo: " + cmd.toString() + '\n');
 		frame.repaint();
 	}
 	
@@ -76,6 +78,7 @@ public class DrawingController {
 		cmd.execute();
 		undoStack.push(cmd);
 		updateControls();
+		frame.getTextArea().append("Redo: " + cmd.toString() + '\n');
 		frame.repaint();
 	}
 	
@@ -157,7 +160,7 @@ public class DrawingController {
 	private void select(Point p) {
 		for (int i = model.getShapes().size() - 1; i >= 0; i--) {
 			if (model.get(i).contains(p.getX(), p.getY())) {
-				executeCommand(new SelectShapeCmd(model.get(i)));
+				executeCommand(new SelectShapeCmd(model.get(i), model));
 				return;
 			}
 		}
@@ -171,7 +174,7 @@ public class DrawingController {
 			}
 		}
 		if(selectedShapes.size() > 0) {
-			executeCommand(new DeselectShapesCmd(selectedShapes));
+			executeCommand(new DeselectShapesCmd(selectedShapes, model));
 		}
 	}
 	
@@ -188,9 +191,9 @@ public class DrawingController {
 				return;
 			
 			if (clicked.isSelected()) {
-				executeCommand(new DeselectShapesCmd(clicked));
+				executeCommand(new DeselectShapesCmd(clicked, model));
 			} else {
-				executeCommand(new SelectShapeCmd(clicked));
+				executeCommand(new SelectShapeCmd(clicked, model));
 			}
 			return;
 		}

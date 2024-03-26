@@ -4,7 +4,10 @@ import geometry.Shape;
 import mvc.DrawingModel;
 
 public class BringShapeToFrontCmd implements Command {
-
+	@Override
+	public String toString() {
+		return "Bring To Front [shape=" + shape + "]";
+	}
 	private Shape shape;
 	private DrawingModel model;
 	private int temp;

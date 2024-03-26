@@ -23,4 +23,9 @@ public class UpdatePointCommand implements Command {
 		point.clone(original);
 	}
 
+	@Override
+	public String toString() {
+		return "Update Point [point=" + point + ", newState=" + newState + "]";
+	}
+
 }
