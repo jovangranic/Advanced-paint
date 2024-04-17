@@ -54,6 +54,10 @@ public class DrawingFrame extends JFrame {
 	private JPanel panel;
 	private JScrollPane scrollPane_1;
 	private JTextArea textArea;
+	private JButton btnSaveDrawing;
+	private JButton btnLoadDrawing;
+	private JButton btnSaveLog;
+	private JButton btnLoadLog;
 
 	/**
 	 * Launch the application.
@@ -130,9 +134,9 @@ public class DrawingFrame extends JFrame {
 		contentPane.add(ModifyButtonspanel, BorderLayout.EAST);
 		GridBagLayout gbl_ModifyButtonspanel = new GridBagLayout();
 		gbl_ModifyButtonspanel.columnWidths = new int[]{89, 0};
-		gbl_ModifyButtonspanel.rowHeights = new int[]{17, 28, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_ModifyButtonspanel.rowHeights = new int[]{17, 28, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_ModifyButtonspanel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_ModifyButtonspanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_ModifyButtonspanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		ModifyButtonspanel.setLayout(gbl_ModifyButtonspanel);
 
 		toggleSelect = new JToggleButton("Select");
@@ -284,10 +288,64 @@ public class DrawingFrame extends JFrame {
 		});
 		btnFillColor.setBackground(SystemColor.control);
 		GridBagConstraints gbc_btnFillColor = new GridBagConstraints();
+		gbc_btnFillColor.insets = new Insets(0, 0, 5, 0);
 		gbc_btnFillColor.fill = GridBagConstraints.BOTH;
 		gbc_btnFillColor.gridx = 0;
 		gbc_btnFillColor.gridy = 10;
 		ModifyButtonspanel.add(btnFillColor, gbc_btnFillColor);
+		
+		btnSaveDrawing = new JButton("Save Drawing");
+		btnSaveDrawing.setBackground(SystemColor.control);
+		btnSaveDrawing.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.saveDrawing();
+			}
+		});
+		GridBagConstraints gbc_btnSaveDrawing = new GridBagConstraints();
+		gbc_btnSaveDrawing.insets = new Insets(0, 0, 5, 0);
+		gbc_btnSaveDrawing.fill = GridBagConstraints.BOTH;
+		gbc_btnSaveDrawing.gridx = 0;
+		gbc_btnSaveDrawing.gridy = 11;
+		ModifyButtonspanel.add(btnSaveDrawing, gbc_btnSaveDrawing);
+		
+		btnLoadDrawing = new JButton("Load Drawing");
+		btnLoadDrawing.setBackground(SystemColor.control);
+		btnLoadDrawing.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.loadDrawing();
+			}
+		});
+		GridBagConstraints gbc_btnLoadDrawing = new GridBagConstraints();
+		gbc_btnLoadDrawing.fill = GridBagConstraints.BOTH;
+		gbc_btnLoadDrawing.insets = new Insets(0, 0, 5, 0);
+		gbc_btnLoadDrawing.gridx = 0;
+		gbc_btnLoadDrawing.gridy = 12;
+		ModifyButtonspanel.add(btnLoadDrawing, gbc_btnLoadDrawing);
+		
+		btnSaveLog = new JButton("Save Log");
+		btnSaveLog.setBackground(SystemColor.control);
+		btnSaveLog.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		GridBagConstraints gbc_btnSaveLog = new GridBagConstraints();
+		gbc_btnSaveLog.fill = GridBagConstraints.BOTH;
+		gbc_btnSaveLog.insets = new Insets(0, 0, 5, 0);
+		gbc_btnSaveLog.gridx = 0;
+		gbc_btnSaveLog.gridy = 13;
+		ModifyButtonspanel.add(btnSaveLog, gbc_btnSaveLog);
+		
+		btnLoadLog = new JButton("Load Log");
+		btnLoadLog.setBackground(SystemColor.control);
+		btnLoadLog.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		GridBagConstraints gbc_btnLoadLog = new GridBagConstraints();
+		gbc_btnLoadLog.fill = GridBagConstraints.BOTH;
+		gbc_btnLoadLog.gridx = 0;
+		gbc_btnLoadLog.gridy = 14;
+		ModifyButtonspanel.add(btnLoadLog, gbc_btnLoadLog);
 		
 		
 		scrollPane = new JScrollPane();

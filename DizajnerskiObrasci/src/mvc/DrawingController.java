@@ -6,11 +6,14 @@ package mvc;
 
 import java.awt.Color;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Stack;
 
 import javax.swing.JColorChooser;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import command.AddShapeCmd;
 import command.BringShapeToBackCmd;
@@ -27,10 +30,23 @@ import command.UpdateHexagonCommand;
 import command.UpdateLineCommand;
 import command.UpdatePointCommand;
 import command.UpdateRectangleCommand;
-import geometry.*;
+import drawing.DlgCircle;
+import drawing.DlgDonut;
+import drawing.DlgHexagon;
+import drawing.DlgLine;
+import drawing.DlgPoint;
+import drawing.DlgRectangle;
+import geometry.Circle;
+import geometry.Donut;
+import geometry.HexagonAdapter;
+import geometry.Line;
+import geometry.Point;
+import geometry.Rectangle;
+import geometry.Shape;
 import observer.ControlsObserver;
 import observer.ObservableControls;
-import drawing.*;
+import strategy.LoadFileStrategy;
+import strategy.SaveFileStrategy;
 
 public class DrawingController {
 	
@@ -48,11 +64,19 @@ public class DrawingController {
 	private ObservableControls controls = new ObservableControls();
 	private ControlsObserver observer;
 	
+	private LoadFileStrategy drawingLoader;
+	private SaveFileStrategy drawingSaver;
+	
 	public DrawingController(DrawingModel model, DrawingFrame frame) {
 		this.model = model;
 		this.frame = frame;
 		this.observer = new ControlsObserver(frame);
 		this.controls.addListener(observer);
+	}
+	
+	public void setDrawingStrategy(LoadFileStrategy load, SaveFileStrategy save) {
+		this.drawingLoader = load;
+		this.drawingSaver = save;
 	}
 	
 	private void executeCommand(Command command) {
@@ -384,6 +408,33 @@ public class DrawingController {
 		Color color = JColorChooser.showDialog(frame, "Choose fill color", fillColor);
 		if(color != null) {
 			this.fillColor = color;
+		}
+	}
+	
+	public void loadDrawing() {
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setDialogTitle("Load Drawing");
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("Binary Files", "bin");
+		fileChooser.setFileFilter(filter);
+		if (fileChooser.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
+			File file = fileChooser.getSelectedFile();
+			String path = file.getAbsolutePath();
+			model.setShapes((ArrayList<Shape>) drawingLoader.load(path));
+			undoStack.clear();
+			redoStack.clear();
+			frame.getTextArea().setText("");
+			updateControls();
+			frame.repaint();
+		}
+	}
+	
+	public void saveDrawing() {
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setDialogTitle("Save Drawing As");
+		if (fileChooser.showSaveDialog(frame) == JFileChooser.APPROVE_OPTION) {
+			File file = fileChooser.getSelectedFile();
+			String path = file.getAbsolutePath();
+			drawingSaver.save(model.getShapes(), path + ".bin");
 		}
 	}
 }
