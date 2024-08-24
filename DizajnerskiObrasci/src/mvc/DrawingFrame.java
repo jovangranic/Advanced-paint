@@ -326,6 +326,7 @@ public class DrawingFrame extends JFrame {
 		btnSaveLog.setBackground(SystemColor.control);
 		btnSaveLog.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				controller.saveLog();
 			}
 		});
 		GridBagConstraints gbc_btnSaveLog = new GridBagConstraints();
@@ -339,6 +340,7 @@ public class DrawingFrame extends JFrame {
 		btnLoadLog.setBackground(SystemColor.control);
 		btnLoadLog.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				controller.loadLog();
 			}
 		});
 		GridBagConstraints gbc_btnLoadLog = new GridBagConstraints();

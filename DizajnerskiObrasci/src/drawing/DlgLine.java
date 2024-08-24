@@ -261,6 +261,11 @@ public class DlgLine extends JDialog {
 		x2Field.setText("" + endPoint.getX());
 		y2Field.setText("" + endPoint.getY());
 	}
+	
+	public void setLine(Line l) {
+		setLine(l.getStartPoint(), l.getEndPoint());
+		this.color = l.getColor();
+	}
 
 	public Line getLine() {
 		return line;

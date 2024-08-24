@@ -121,8 +121,9 @@ public class Donut extends Circle {
 
 	@Override
 	public String toString() {
-		return "Donut [x=" + center.getX() + ", y=" + center.getY() + ", innerRadius=" + innerRadius + ", fillColor=" + fillColor + ", color="
-				+ color + "]";
+		return "Donut [x=" + center.getX() + ", y=" + center.getY() + 
+				", radius=" + getRadius() + ", innerRadius=" + innerRadius + 
+				", fillColor=" + fillColor + ", color=" + color + "]";
 	}
 
 	public void clone(Donut donut) {

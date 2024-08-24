@@ -1,6 +1,7 @@
 package mvc;
 
 import strategy.DrawingLoadSave;
+import strategy.LogLoadSave;
 
 public class Application {
 
@@ -14,6 +15,8 @@ public class Application {
 		
 		DrawingLoadSave drawingStrategy = new DrawingLoadSave();
 		controller.setDrawingStrategy(drawingStrategy, drawingStrategy);
+		LogLoadSave logStrategy = new LogLoadSave(controller);
+		controller.setLogStrategy(logStrategy, logStrategy);
 		
 		//frame
 		frame.setVisible(true);

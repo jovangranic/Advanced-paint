@@ -66,6 +66,8 @@ public class DrawingController {
 	
 	private LoadFileStrategy drawingLoader;
 	private SaveFileStrategy drawingSaver;
+	private LoadFileStrategy logLoader;
+	private SaveFileStrategy logSaver;
 	
 	public DrawingController(DrawingModel model, DrawingFrame frame) {
 		this.model = model;
@@ -77,6 +79,11 @@ public class DrawingController {
 	public void setDrawingStrategy(LoadFileStrategy load, SaveFileStrategy save) {
 		this.drawingLoader = load;
 		this.drawingSaver = save;
+	}
+	
+	public void setLogStrategy(LoadFileStrategy load, SaveFileStrategy save) {
+		this.logLoader = load;
+		this.logSaver = save;
 	}
 	
 	private void executeCommand(Command command) {
@@ -319,7 +326,7 @@ public class DrawingController {
 
 		else if (shape instanceof Line) {
 			DlgLine dlgLine = new DlgLine();
-			dlgLine.setLine(((Line) shape).getStartPoint(), ((Line) shape).getEndPoint());
+			dlgLine.setLine((Line) shape);
 			dlgLine.setVisible(true);
 			Line line = dlgLine.getLine();
 
@@ -436,5 +443,170 @@ public class DrawingController {
 			String path = file.getAbsolutePath();
 			drawingSaver.save(model.getShapes(), path + ".bin");
 		}
+	}
+	
+	public void loadLog() {
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setDialogTitle("Load Log");
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt");
+		fileChooser.setFileFilter(filter);
+		if (fileChooser.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
+			File file = fileChooser.getSelectedFile();
+			String path = file.getAbsolutePath();
+			undoStack.clear();
+			redoStack.clear();
+			frame.getTextArea().setText("");
+			updateControls();
+			logLoader.load(path);
+			frame.repaint();
+		}
+	}
+	
+	public void saveLog() {
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setDialogTitle("Save Log As");
+		if (fileChooser.showSaveDialog(frame) == JFileChooser.APPROVE_OPTION) {
+			File file = fileChooser.getSelectedFile();
+			String path = file.getAbsolutePath();
+			logSaver.save(frame.getTextArea().getText(), path + ".txt");
+		}
+	}
+	
+	private Shape stringToShape(String shapeStr) {
+		Shape newShape = null;
+		String[] split = shapeStr.split("=");
+		
+		// Point [x|=|84, y|=|83, color|=|java.awt.Color[r|=|0,g|=|0,b|=|0]]
+		
+		if (shapeStr.startsWith("Point")) {
+			int x = Integer.parseInt(split[1].split(",")[0]);
+			int y = Integer.parseInt(split[2].split(",")[0]);
+			int r = Integer.parseInt(split[4].split(",")[0]);
+			int g = Integer.parseInt(split[5].split(",")[0]);
+			int b = Integer.parseInt(split[6].split("\\]")[0]);
+			newShape = new Point(x, y, new Color(r,g,b));
+		} else if (shapeStr.startsWith("Line")) {
+			int x1 = Integer.parseInt(split[1].split(",")[0]);
+			int y1 = Integer.parseInt(split[2].split(",")[0]);
+			int x2 = Integer.parseInt(split[3].split(",")[0]);
+			int y2 = Integer.parseInt(split[4].split(",")[0]);
+			int r = Integer.parseInt(split[6].split(",")[0]);
+			int g = Integer.parseInt(split[7].split(",")[0]);
+			int b = Integer.parseInt(split[8].split("\\]")[0]);
+			newShape = new Line(new Point(x1, y1), new Point(x2, y2), new Color(r,g,b));
+		} else if (shapeStr.startsWith("Rectangle")) {
+			int x = Integer.parseInt(split[1].split(",")[0]);
+			int y = Integer.parseInt(split[2].split(",")[0]);
+			int width = Integer.parseInt(split[3].split(",")[0]);
+			int height = Integer.parseInt(split[4].split(",")[0]);
+			int r1 = Integer.parseInt(split[6].split(",")[0]);
+			int g1 = Integer.parseInt(split[7].split(",")[0]);
+			int b1 = Integer.parseInt(split[8].split("\\]")[0]);
+			int r2 = Integer.parseInt(split[10].split(",")[0]);
+			int g2 = Integer.parseInt(split[11].split(",")[0]);
+			int b2 = Integer.parseInt(split[12].split("\\]")[0]);
+			newShape = new Rectangle(new Point(x, y), width, height, new Color(r2,g2,b2), new Color(r1,g1,b1));
+		} else if (shapeStr.startsWith("Circle")) {
+			int x = Integer.parseInt(split[1].split(",")[0]);
+			int y = Integer.parseInt(split[2].split(",")[0]);
+			int r = Integer.parseInt(split[3].split(",")[0]);
+			int r1 = Integer.parseInt(split[5].split(",")[0]);
+			int g1 = Integer.parseInt(split[6].split(",")[0]);
+			int b1 = Integer.parseInt(split[7].split("\\]")[0]);
+			int r2 = Integer.parseInt(split[9].split(",")[0]);
+			int g2 = Integer.parseInt(split[10].split(",")[0]);
+			int b2 = Integer.parseInt(split[11].split("\\]")[0]);
+			newShape = new Circle(new Point(x, y), r, new Color(r2,g2,b2), new Color(r1,g1,b1));
+		} else if (shapeStr.startsWith("Donut")) {
+			int x = Integer.parseInt(split[1].split(",")[0]);
+			int y = Integer.parseInt(split[2].split(",")[0]);
+			int r = Integer.parseInt(split[3].split(",")[0]);
+			int innerR = Integer.parseInt(split[4].split(",")[0]);
+			int r1 = Integer.parseInt(split[6].split(",")[0]);
+			int g1 = Integer.parseInt(split[7].split(",")[0]);
+			int b1 = Integer.parseInt(split[8].split("\\]")[0]);
+			int r2 = Integer.parseInt(split[10].split(",")[0]);
+			int g2 = Integer.parseInt(split[11].split(",")[0]);
+			int b2 = Integer.parseInt(split[12].split("\\]")[0]);
+			newShape = new Donut(new Point(x, y), r, innerR, new Color(r2,g2,b2), new Color(r1,g1,b1));
+		} else if (shapeStr.startsWith("HexagonAdapter")) {
+			int x = Integer.parseInt(split[1].split(",")[0]);
+			int y = Integer.parseInt(split[2].split(",")[0]);
+			int r = Integer.parseInt(split[3].split(",")[0]);
+			int r1 = Integer.parseInt(split[5].split(",")[0]);
+			int g1 = Integer.parseInt(split[6].split(",")[0]);
+			int b1 = Integer.parseInt(split[7].split("\\]")[0]);
+			int r2 = Integer.parseInt(split[9].split(",")[0]);
+			int g2 = Integer.parseInt(split[10].split(",")[0]);
+			int b2 = Integer.parseInt(split[11].split("\\]")[0]);
+			newShape = new HexagonAdapter(x, y, r, new Color(r1,g1,b1), new Color(r2,g2,b2));
+		}
+		
+		return newShape;
+	}
+	
+	public void executeLine(String line) {
+		if(line.startsWith("Add")) {
+			String[] split = line.split("shape=");
+			String shapeStr = split[1].substring(0, split[1].length() - 1);
+			executeCommand(new AddShapeCmd(stringToShape(shapeStr), model));
+		} else if (line.startsWith("Remove")) {
+			this.delete();
+		} else if (line.startsWith("Bring To Back")) {
+			this.bringShapeToBack();
+		} else if (line.startsWith("Bring To Front")) {
+			this.bringShapeToFront();
+		} else if (line.startsWith("To Back")) {
+			this.shapeToBack();
+		} else if (line.startsWith("To Front")) {
+			this.shapeToFront();
+		} else if (line.startsWith("Deselect")) {
+			String[] split = line.split("=");
+			String substr = split[1].substring(0, split[1].length() - 1);
+			String[] indexes = substr.split(", ");
+			ArrayList<Shape> shapes = new ArrayList<Shape>();
+			for (int i = 0; i < indexes.length; i++) {
+				shapes.add(model.get(Integer.parseInt(indexes[i])));
+			}
+			executeCommand(new DeselectShapesCmd(shapes, model));
+		} else if (line.startsWith("Select")) {
+			String[] split = line.split("=");
+			String substr = split[1].substring(0, split[1].length() - 1);
+			executeCommand(new SelectShapeCmd(model.get(Integer.parseInt(substr)), model));
+		} else if (line.startsWith("Update Point")) {
+			String[] split = line.split("newState=");
+			String shapeStr = split[1].substring(0, split[1].length() - 1);
+			executeCommand(new UpdatePointCommand((Point)model.get(getSelected()), 
+					(Point)stringToShape(shapeStr)));
+		} else if (line.startsWith("Update Line")) {
+			String[] split = line.split("newState=");
+			String shapeStr = split[1].substring(0, split[1].length() - 1);
+			executeCommand(new UpdateLineCommand((Line)model.get(getSelected()), 
+					(Line)stringToShape(shapeStr)));
+		} else if (line.startsWith("Update Rectangle")) {
+			String[] split = line.split("newState=");
+			String shapeStr = split[1].substring(0, split[1].length() - 1);
+			executeCommand(new UpdateRectangleCommand((Rectangle)model.get(getSelected()), 
+					(Rectangle)stringToShape(shapeStr)));
+		} else if (line.startsWith("Update Circle")) {
+			String[] split = line.split("newState=");
+			String shapeStr = split[1].substring(0, split[1].length() - 1);
+			executeCommand(new UpdateCircleCommand((Circle)model.get(getSelected()), 
+					(Circle)stringToShape(shapeStr)));
+		} else if (line.startsWith("Update Donut")) {
+			String[] split = line.split("newState=");
+			String shapeStr = split[1].substring(0, split[1].length() - 1);
+			executeCommand(new UpdateDonutCommand((Donut)model.get(getSelected()), 
+					(Donut)stringToShape(shapeStr)));
+		} else if (line.startsWith("Update Hexagon")) {
+			String[] split = line.split("newState=");
+			String shapeStr = split[1].substring(0, split[1].length() - 1);
+			executeCommand(new UpdateHexagonCommand((HexagonAdapter)model.get(getSelected()), 
+					(HexagonAdapter)stringToShape(shapeStr)));
+		} else if (line.startsWith("Undo")) {
+			this.undo();
+		} else if (line.startsWith("Redo")) {
+			this.redo();
+		} 
 	}
 }
