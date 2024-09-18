@@ -33,4 +33,4 @@ Kod MVC obrasca, kao što je pokazivano na vežbama, model je klasa u kojoj je l
 
 # Advanced-paint
 Java swing advanced paint application using designer patterns
->>>>>>> origin/main
+
