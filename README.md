@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-## Opis zahteva za projekat iz predmeta Dizajnerski zadaci za 2019/2020
+## Opis zahteva za projekat iz predmeta Dizajnerski zadaci za 2023/2024
 Korišćenjem *Java Swing* implementirati desktop aplikaciju za rad sa 2D grafikom. Aplikacija mora podržavati funkcionalnosti koje su rađene u projektnom zadatku na predmetu Objektno orijentisane informacione tehnologije.
 Izmene/Dodatne funkcionalnosti:
 1. crtanje oblika različitim bojama (boja ivice i boja unutrašnjosti) za šta je potrebno koristiti *JColorChooser* klasu,
@@ -31,7 +30,7 @@ Kod MVC obrasca, kao što je pokazivano na vežbama, model je klasa u kojoj je l
 - selektovani oblik, nakon modifikacije, treba da ostane selektovan.
 
 - ukoliko se nakon *undo* funkcionalnosti izvrši neka nova funkcionalnost (nacrta novi oblik, modifikuje postojeći…), *redo* funkcionalnost ne bi trebalo da bude dostupna.
-=======
+
 # Advanced-paint
 Java swing advanced paint application using designer patterns
 >>>>>>> origin/main
